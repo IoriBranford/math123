@@ -17,20 +17,16 @@ function math3.cross(x, y, z, x2, y2, z2)
 end
 
 function math3.lensq(x, y, z)
-    z = z or 0
     return x*x+y*y+z*z
 end
-local lensq = math3.lensq
 
 function math3.len(x, y, z)
-    z = z or 0
     return sqrt(x*x + y*y + z*z)
 end
 
 function math3.norm(x, y, z)
-    z = z or 0
-    local len = sqrt(x*x + y*y + z*z)
-    return x/len, y/len, z/len
+    local l = sqrt(x*x + y*y + z*z)
+    return x/l, y/l, z/l, l
 end
 
 function math3.rescale(x, y, z, l)
@@ -43,12 +39,12 @@ end
 
 function math3.distsq(x1, y1, z1, x2, y2, z2)
     local dx, dy, dz = x2-x1, y2-y1, z2-z1
-    return dx*dx + dy*dy + dz*dz
+    return dx*dx + dy*dy + dz*dz, dx, dy, dz
 end
 
 function math3.dist(x1, y1, z1, x2, y2, z2)
     local dx, dy, dz = x2-x1, y2-y1, z2-z1
-    return sqrt(dx*dx + dy*dy + dz*dz)
+    return sqrt(dx*dx + dy*dy + dz*dz), dx, dy, dz
 end
 
 function math3.fromspherical(axy, az, d)

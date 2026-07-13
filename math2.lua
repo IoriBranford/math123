@@ -58,7 +58,7 @@ end
 
 function math2.distsq(x1, y1, x2, y2)
     local dx, dy = x2-x1, y2-y1
-    return dx*dx + dy*dy
+    return dx*dx + dy*dy, dx, dy
 end
 local distsq = math2.distsq
 
@@ -68,30 +68,18 @@ function math2.dist(x1, y1, x2, y2)
 end
 local dist = math2.dist
 
-function math2.norm(x, y, z)
-    z = z or 0
-    local len = sqrt(x*x + y*y + z*z)
-    return x/len, y/len, z/len
+function math2.norm(x, y)
+    local l = sqrt(x*x + y*y)
+    return x/l, y/l, l
 end
 if Debug_norm0 then
     local norm = math2.norm
-    function math2.norm(x, y, z)
-        assert(x ~= 0 or y ~= 0 or z ~= 0, "norm(0,0,0)")
-        return norm(x, y, z)
+    function math2.norm(x, y)
+        assert(x ~= 0 or y ~= 0, "norm(0,0)")
+        return norm(x, y)
     end
 end
 local norm = math2.norm
-
-function math2.lennorm(x, y, z)
-    z = z or 0
-    local len = sqrt(x*x + y*y + z*z)
-    return len, x/len, y/len, z/len
-end
-local lennorm = math2.lennorm
-
-function math2.distnorm(x1, y1, x2, y2)
-    return lennorm(x2-x1, y2-y1)
-end
 
 function math2.rescale(x, y, l)
     if x == 0 and y == 0 then
@@ -182,10 +170,10 @@ end
 
 function math2.testcircles(ax, ay, ar, bx, by, br)
     local dx, dy = ax - bx, ay - by
-    local distsq = lensq(dx, dy)
-    local radii = ar + br
-    local radiisq = radii * radii
-    return distsq <= radiisq and distsq
+    local dsq = lensq(dx, dy)
+    local rr = ar + br
+    local rrsq = rr * rr
+    return dsq <= rrsq and dsq
 end
 
 ---Barycentric coordinates of point p in triangle abc
@@ -236,16 +224,16 @@ function math2.pointinpolygon(points, x, y)
     return inside
 end
 
----@param polyline number[] Every 2 is a point
-function math2.nearestpolylinepoint(polyline, x, y, starti, startj)
-    starti = starti or 2
-    startj = startj or (starti + 2)
-    local i = starti
-    local x1, y1 = polyline[i-1], polyline[i]
+---@param points number[] Every 2 is a point
+function math2.nearestpolylinepoint(points, x, y, i1, j1)
+    i1 = i1 or 2
+    j1 = j1 or (i1 + 2)
+    local i = i1
+    local x1, y1 = points[i-1], points[i]
     local nearestx, nearesty, nearesti, nearestj
     local nearestdsq = huge
-    for j = startj, #polyline, 2 do
-        local x2, y2 = polyline[j-1], polyline[j]
+    for j = j1, #points, 2 do
+        local x2, y2 = points[j-1], points[j]
         local projx, projy = math2.projpointsegment(x, y, x1, y1, x2, y2)
         local dsq = distsq(x, y, projx, projy)
         if dsq < nearestdsq then

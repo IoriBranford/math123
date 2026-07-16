@@ -538,8 +538,8 @@ function math2.polylinesegmentslengths(points, i, j)
 end
 
 ---@param points number[]
----@param x number walker x
----@param y number walker y
+---@param x number? walker x
+---@param y number? walker y
 ---@param i integer?
 ---@param speed number? default 1, sign indicates forward or backward
 ---@param stop integer?
@@ -549,8 +549,10 @@ end
 function math2.walkpolyline(points, x, y, i, speed, stop)
     local n = #points
     i = max(2, min(i or 2, n))
+    x = x or points[i-1]
+    y = y or points[i]
 
-    speed = speed or 1
+    speed = speed or 0
     local backward = speed < 0
     speed = abs(speed)
 

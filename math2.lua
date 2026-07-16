@@ -23,6 +23,21 @@ local atan2 = math.atan2
 local pi = math.pi
 local huge = math.huge
 
+function math2.vadd(x, y, a, b)
+    return x+a, y+b
+end
+
+function math2.vsub(x, y, a, b)
+    return x-a, y-b
+end
+
+function math2.vmul(x, y, a)
+    return x*a, y*a
+end
+
+function math2.vdiv(x, y, a)
+    return x/a, y/a
+end
 
 function math2.frompolar(a, d)
     d = d or 1

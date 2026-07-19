@@ -87,6 +87,15 @@ function math2.norm(x, y)
     local l = sqrt(x*x + y*y)
     return x/l, y/l, l
 end
+
+function math2.dir(x, y, x2, y2)
+    local dx, dy = x2-x,y2-y
+    if dx == 0 and dy == 0 then
+        return 0, 0
+    end
+    return math2.norm(x2-x,y2-y)
+end
+
 if Debug_norm0 then
     local norm = math2.norm
     function math2.norm(x, y)

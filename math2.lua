@@ -200,6 +200,19 @@ function math2.testcircles(ax, ay, ar, bx, by, br)
     return dsq <= rrsq and dsq
 end
 
+---
+---@param ex number
+---@param ey number
+---@param ehw number
+---@param ehh number
+---@param x number
+---@param y number
+---@return number inside <1 = inside, >1 = outside
+function math2.pointinellipse(ex, ey, ehw, ehh, x, y)
+    x, y = x-ex, y-ey
+    return x*x/ehw*ehw + y*y/ehh*ehh
+end
+
 ---Barycentric coordinates of point p in triangle abc
 ---@return number? a how much is p outside edge bc; 1 = on the edge
 ---@return number? b how much is p outside edge ac; 1 = on the edge

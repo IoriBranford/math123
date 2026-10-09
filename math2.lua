@@ -146,6 +146,12 @@ function math2.rotangletowards(angle, dest, speed)
     return atan2(y, x)
 end
 
+function math2.angledet(a, b)
+    local ax, ay = math2.frompolar(a)
+    local bx, by = math2.frompolar(b)
+    return math2.det(ax, ay, bx, by)
+end
+
 function math2.anglesdiff(a, b)
     local ax, ay = math2.frompolar(a)
     local bx, by = math2.frompolar(b)

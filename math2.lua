@@ -220,9 +220,9 @@ function math2.pointinellipse(ex, ey, ehw, ehh, x, y)
 end
 
 ---Barycentric coordinates of point p in triangle abc
----@return number? a how much is p outside edge bc; 1 = on the edge
----@return number? b how much is p outside edge ac; 1 = on the edge
----@return number? c how much is p outside edge ab; 1 = on the edge
+---@return number? a p's dist from bc; 1 = a's dist
+---@return number? b p's dist from ac; 1 = b's dist
+---@return number? c p's dist from ab; 1 = c's dist
 function math2.bary(px, py, ax, ay, bx, by, cx, cy)
     local acx, acy = cx - ax, cy - ay
     local abx, aby = bx - ax, by - ay
